@@ -53,6 +53,13 @@ pub struct SummaryNetworkSettings {
     pub Networks: Option<HashMap<String, Option<Network>>>,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[allow(non_snake_case)]
+pub struct GraphDriverSetting {
+    pub Name: String,
+    pub Data: HashMap<String, String>,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize)]
 #[allow(non_snake_case)]
 pub struct ContainerInfo {
@@ -62,7 +69,7 @@ pub struct ContainerInfo {
     pub Created: String,
     pub Driver: String,
     // ExecIDs
-    // GraphDriver
+    pub GraphDriver: GraphDriverSetting,
     // HostConfig
     pub HostnamePath: String,
     pub HostsPath: String,
