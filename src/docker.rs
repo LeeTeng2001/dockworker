@@ -9,7 +9,7 @@ use crate::event::EventResponse;
 use crate::filesystem::{FilesystemChange, XDockerContainerPathStat};
 use crate::http_client::{HaveHttpClient, HttpClient};
 use crate::hyper_client::HyperClient;
-use crate::image::{FoundImage, Image, ImageFilters, ImageId, SummaryImage};
+use crate::image::{FoundImage, Image, ImageFilters, ImageId, ListImageFilters, SummaryImage};
 use crate::network::*;
 use crate::options::*;
 use crate::process::{Process, Top};
@@ -1178,10 +1178,19 @@ impl Docker {
     ///
     /// # API
     /// /images/json
-    pub async fn images(&self, all: bool) -> Result<Vec<SummaryImage>, DwError> {
+    pub async fn images(
+        &self,
+        all: bool,
+        filter: Option<ListImageFilters>,
+    ) -> Result<Vec<SummaryImage>, DwError> {
+        let mut query = url::form_urlencoded::Serializer::new(String::new());
+        query.append_pair("all", &all.to_string());
+        if let Some(f) = filter {
+            query.append_pair("filters", &serde_json::to_string(&f).unwrap());
+        }
         let res = self
             .http_client()
-            .get(self.headers(), &format!("/images/json?a={}", all as u32))
+            .get(self.headers(), &format!("/images/json?{}", query.finish()))
             .await?;
         api_result(res).map_err(Into::into)
     }

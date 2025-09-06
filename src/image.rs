@@ -137,6 +137,24 @@ pub struct ImageId {
     id: String,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ListImageFilters {
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub before: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub dangling: Option<bool>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub label: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub reference: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub since: Option<String>,
+}
+
 impl From<String> for ImageId {
     fn from(id: String) -> Self {
         Self { id }
