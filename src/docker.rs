@@ -1188,10 +1188,11 @@ impl Docker {
         if let Some(f) = filter {
             query.append_pair("filters", &serde_json::to_string(&f).unwrap());
         }
-        println!("query: {}", query.finish());
+        let q = query.finish();
+        println!("query: {}", q);
         let res = self
             .http_client()
-            .get(self.headers(), &format!("/images/json?{}", query.finish()))
+            .get(self.headers(), &format!("/images/json?{}", q))
             .await?;
         api_result(res).map_err(Into::into)
     }
