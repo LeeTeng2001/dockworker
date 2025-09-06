@@ -137,7 +137,7 @@ pub struct ImageId {
     id: String,
 }
 
-#[derive(Debug, Clone, Serialize, Deserialize)]
+#[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct ListImageFilters {
     #[serde(skip_serializing_if = "Option::is_none")]
     pub before: Option<String>,
