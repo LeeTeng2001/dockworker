@@ -1189,7 +1189,6 @@ impl Docker {
             query.append_pair("filters", &serde_json::to_string(&f).unwrap());
         }
         let q = query.finish();
-        println!("query: {}", q);
         let res = self
             .http_client()
             .get(self.headers(), &format!("/images/json?{}", q))

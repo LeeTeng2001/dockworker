@@ -140,7 +140,7 @@ pub struct ImageId {
 #[derive(Debug, Clone, Serialize, Deserialize, Default)]
 pub struct ListImageFilters {
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub before: Option<String>,
+    pub before: Option<Vec<String>>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
     pub dangling: Option<bool>,
@@ -149,10 +149,10 @@ pub struct ListImageFilters {
     pub label: Option<String>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub reference: Option<String>,
+    pub reference: Option<Vec<String>>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub since: Option<String>,
+    pub since: Option<Vec<String>>,
 }
 
 impl From<String> for ImageId {
